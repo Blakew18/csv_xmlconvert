@@ -19,7 +19,7 @@ export const RootStoreModel = types
     return {
       // This Function is Written in form of an async fucntion in mobx style. You can also write a normal function
       useExpressData: flow(function* useExpressData() {
-        let newString = yield fetchSomeData()
+        let newString = yield fetchSomeData('', [])
         self.testData = newString
       }),
       changeMyData(myString:string) {

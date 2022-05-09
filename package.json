@@ -1,6 +1,7 @@
 {
-  "name": "electron-react-express-ts-mobx",
+  "name": "ac-aus-xml-csv-converter",
   "version": "0.0.1",
+  "author": "AC Australia",
   "main": "public/electron.js",
   "homepage": "./",
   "private": true,
@@ -9,6 +10,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@wmfs/xml2csv": "^1.26.0",
     "autoprefixer": "^10.1.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -29,18 +31,15 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^4.1.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "3.4.1",
     "react-transition-group": "^4.4.1",
-    "tailwindcss": "^2.0.2"
+    "react-xml-parser": "^1.1.8",
+    "tailwindcss": "^2.0.2",
+    "xml2csv": "^1.0.1"
   },
   "build": {
-    "extraResources": [
-      {
-        "from": "vbs",
-        "to": "vbs"
-      }
-    ]
+    "extraResources": []
   },
   "scripts": {
     "dev": "concurrently -k \"npm start\" \"npm:electron\"",
@@ -53,10 +52,14 @@
     "publish": "npm run build:css && react-scripts build && electron-forge publish",
     "make": "npm run build:css && react-scripts build && electron-forge make",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "resolutions": {
+    "@types/react": "^17.0.38"
   },
   "browserslist": {
     "production": [
@@ -76,11 +79,11 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.52",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.52",
-    "@types/react-router-dom": "^5.1.6",
+    "@types/react-router-dom": "^5.3.3",
     "@types/lodash": "^4.14.161",
     "@types/node": "^12.12.57",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.3",
     "concurrently": "^5.2.0",
     "electron": "^9.1.1",
     "electron-devtools-installer": "^3.1.1",

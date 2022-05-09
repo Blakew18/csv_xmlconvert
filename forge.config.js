@@ -2,23 +2,21 @@ require('dotenv').config()
 
 module.exports = {
   "packagerConfig": {
-    "icon": "src/icons/assistant.ico",
-    "name": "electron-react-express-ts-mobx",
-    "authors": "Blake Wiley",
-    "description": "electron-react-express-ts-mobx",
+    "icon": "src/icons/acauslogo.ico",
+    "name": "XML to CSV Converter",
+    "authors": "AC Australia - BW",
+    "description": "Converts and XML file to a CSV",
     "asar": true,
-    "extraResource": [
-      "vbs",
-      "adodb.js"
-    ]
+    "extraResource": []
   },
   "makers": [
     {
       "name": "@electron-forge/maker-squirrel",
       "config": {
-        "name": "electron-react-express-ts-mobx-starter",
-        "authors": "Blake Wiley",
-        "description": "electron-react-express-ts-mobx-starter"
+        "name": "XML-to-CSV-Converter",
+        "authors": "AC Australia - BW",
+        "icon": "src/icons/acauslogo.ico",
+        "description": "Converts and XML file to a CSV"
       }
     }
   ],
@@ -27,8 +25,8 @@ module.exports = {
       name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: "GITHUB USERNAME",
-          name: "GITHUB REPO NAME"
+          owner: "AC-Australia",
+          name: "ac-aus-xml-csv-converter"
         },
         authToken: process.env.GITHUB_TOKEN,
       }

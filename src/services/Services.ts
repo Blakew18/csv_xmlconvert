@@ -21,9 +21,13 @@ axios.interceptors.request.use(async config => {
   return
  })
 
-export const fetchSomeData = async () => {
+export const fetchSomeData = async (filepath:string, csvData:any) => {
   try {
-    const someData = await axios.get(`${expressAPI}api`);
+    console.log(csvData)
+    const someData = await axios.put(`${expressAPI}api`, {
+      filepath: filepath,
+      csvData: csvData
+    });
     return someData
   } catch (err) {
     console.log(err);

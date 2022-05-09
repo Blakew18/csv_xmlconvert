@@ -4,46 +4,67 @@ import { Button } from 'primereact/button';
 import { RootStore } from '../models/root-store';
 import { useStores } from './RootStoreProvider';
 import { Link } from 'react-router-dom'
+import { InputText } from 'primereact/inputtext';
+import {fetchSomeData} from '../services/Services';
+
+
 const PageOne = observer(() => {
 
   const rootStore: RootStore = useStores(); 
-  const [showData, setShowData] = useState<boolean>(false)
+  const [fileToUpdate, setFileToUpdate] = useState<string>('')
 
-  const clickHandle = () => {
-    setShowData(!showData)
+  const handleClickUpdate = (e: any) =>{
+    
+    if (e.length !== 1) return 
+    const file = e[0]
+    const filePath = file.path
+    setFileToUpdate(filePath)
   }
 
-  const showStoreData = () => {
-    if (showData){
-      return<h5>{rootStore.showMeSomeData}</h5>
-    }
+  const handleUpdateFile = async (e:any) => {
+    const newCSVData: any[][] =  []
+    const filepath = e.target.files[0].path 
+    e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      var XMLParser = require('react-xml-parser');
+      var xml:any = new XMLParser().parseFromString(text);
+
+      Array.from(xml.children[1].children).forEach((xmlPart:any) => {
+
+        let csvPart = Array.from(xmlPart.children).map((part:any) => {
+          //console.log(part.children)
+          const value = part.children[2].value
+          return value
+
+        })
+        
+        newCSVData.push(csvPart)
+      } )
+
+       fetchSomeData(filepath, newCSVData)
+    };
+  
+    reader.readAsText(e.target.files[0]);     
   }
 
   return (
     <div className="text-xl">
-      <div className="inline">
-      <Link to="/">
-        <button className="bg-gray-400 p-1 rounded-lg">
-        Page One
-        </button>
-      </Link> 
-      <Link to="/pagetwo">
-        <button className="bg-gray-400 p-1 rounded-lg">
-          Page Two
-        </button>
-      </Link> 
-      <Link to="/pagethree">
-        <button className="bg-gray-400 p-1 rounded-lg">
-          Page Three
-        </button>
-      </Link> 
-      </div>  
-      <h1>Page One</h1>
-      <p> On this page you will be able to click the bellow 
-        button and see the infomation in Root Store Displayed On the 
-        Screen</p>
-        <Button label="Show Store Data" className="bg-gray-400 p-1 rounded-lg" onClick={clickHandle} />    
-        {showStoreData()}    
+        <h1>AC Australia XML to CSV Converter</h1>
+        <div className="p-formgroup-inline"> 
+          <label style={{borderRadius: '4px', display: 'inline-block', padding: '6px 12px', cursor: 'pointer', backgroundColor:'#239AAB', color:'White'}}>
+          <i className="pi pi-file" style={{padding: '6px 12px'}}></i>
+          Select File
+            <input style={{display: 'none'}} type="file" accept=".dxt" onChange={(e) => {
+              handleUpdateFile(e)
+              }}
+            />
+          </label>
+          {/* <InputText id="inputtext" value={fileToUpdate} onChange={(e) => setFileToUpdate(e.target.value)} style={{margin: '6px 12px'}}/> */}
+        </div>
+          {/* <Button label="Submit" icon="pi pi-check"  onClick={handleUpdateFile} style={{backgroundColor:'#239AAB'}}/> */}
+          {/* {errorMessage()} */}
     </div>
   );
 });

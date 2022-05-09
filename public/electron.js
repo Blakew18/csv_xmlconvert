@@ -22,11 +22,7 @@ let installExtension, REACT_DEVELOPER_TOOLS;
   if (require("electron-squirrel-startup")) {
     app.quit();
   }
-// Set Proccess Varibles for Windows ADOdb and Registry Scripts
-  if (process.mainModule.filename.indexOf('app.asar') !== -1) {
-    process.env.PATHFORWSF = path.join(path.dirname(app.getPath('exe')), './resources/vbs');
-    process.env.ADODBPATH = './resources/adodb.js';
-  } 
+
 // Once Express Is Ready Create Window and set up background process
   app.whenReady().then(async () => {
     // Creats Window and Loads Render Files
@@ -74,21 +70,21 @@ let installExtension, REACT_DEVELOPER_TOOLS;
         .catch(error => console.log(`An error occurred: , ${error}`));
     } 
     // If not Dev Mode - Set Up Auto-Updates
-    if (!isDev) {
-      // Variables For Auto Updater
-      const server = 'http://my-cabinetvision-pa.herokuapp.com'
-      const url = `${server}/update/${process.platform}/${app.getVersion()}`
-      autoUpdater.setFeedURL({ url })
-      // Set Timed Interval to Check Updates
-      setInterval(() => {
-        autoUpdater.checkForUpdates()
-      }, 300000)
-      // Sets Message Variable For Dialog Info
-      autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-        let message = process.platform === 'win32' ? releaseNotes : releaseName
-        win.webContents.send('updateAvalible', message)
-      });
-    }
+    // if (!isDev) {
+    //   // Variables For Auto Updater
+    //   const server = 'http://my-cabinetvision-pa.herokuapp.com'
+    //   const url = `${server}/update/${process.platform}/${app.getVersion()}`
+    //   autoUpdater.setFeedURL({ url })
+    //   // Set Timed Interval to Check Updates
+    //   setInterval(() => {
+    //     autoUpdater.checkForUpdates()
+    //   }, 300000)
+    //   // Sets Message Variable For Dialog Info
+    //   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    //     let message = process.platform === 'win32' ? releaseNotes : releaseName
+    //     win.webContents.send('updateAvalible', message)
+    //   });
+    // }
   })
 // Once Window is Closed Quit the app
 app.on('window-all-closed', () => {

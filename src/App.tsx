@@ -1,7 +1,6 @@
 //NPM Imports
 import React, { useState, useEffect, useRef } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
-import "firebase/auth";
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Messages } from 'primereact/messages';
 import { Button } from 'primereact/button';
 import 'primeicons/primeicons.css';
@@ -15,8 +14,6 @@ import { RootStore, setupRootStore } from './models/root-store';
 import { getVersionDetail } from './services/Services'
 import LoadingPage from './components/LoadingPage'
 import PageOne from './components/PageOne'
-import PageTwo from './components/PageTwo'
-import PageThree from './components/PageThree'
 import { APP_NAME } from './constants'
 const { ipcRenderer } = window.require("electron");
 
@@ -70,7 +67,6 @@ function App() {
 
   return (
     <div className='text-center h-full'>
-      <h1>{APP_NAME}</h1>
       <RootStoreProvider value={rootStore}>
         <div className="popup-messages-fixed">
           <div className = 'fixed top-0 right-0 m-1'>
@@ -83,13 +79,7 @@ function App() {
             <Messages ref={showVersionDetail} onClick={showVersionData} />
           </div>
         </div>
-        <HashRouter>
-          <Switch>
-          <Route path='/pagethree' component={PageThree} />
-          <Route path='/pagetwo' component={PageTwo} />
-          <Route component={PageOne} />
-          </Switch>  
-        </HashRouter>
+        <PageOne />
       </RootStoreProvider>
     </div>
   );
