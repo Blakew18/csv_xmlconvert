@@ -1,6 +1,6 @@
 {
   "name": "ac-aus-xml-csv-converter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "AC Australia",
   "main": "public/electron.js",
   "homepage": "./",

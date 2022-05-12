@@ -5,7 +5,7 @@ const app = express();
 const fs = require('fs');
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50000kb'}))
 
 //This sends a Get Request for all original materials. 
 app.put('/api', async(req,res) => {
